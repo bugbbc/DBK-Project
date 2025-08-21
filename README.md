@@ -1,14 +1,53 @@
-# DBK-
+# DBK-Workshop-Frontend
 
-# React + Vite
+This project is a web application built with React and Vite. It serves as a showcase for the DBK-Workshop project, detailing its features, technology, and team.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Features
 
-Currently, two official plugins are available:
+*   **Home Page:** An engaging introduction to the project.
+*   **Project Introduction:** Detailed information about the project's goals and background.
+*   **Technology Demonstration:** Showcases the technical aspects and capabilities of the project.
+*   **Interactive Demo:** Allows users to interact with a live demonstration of the project's core functionalities.
+*   **Team Page:** Introduces the members of the development team.
+*   **Contact Page:** Provides ways to get in touch with the team.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Technology Stack
 
-## Expanding the ESLint configuration
+*   **Frontend:**
+    *   [React](https://reactjs.org/) - A JavaScript library for building user interfaces.
+    *   [Vite](https://vitejs.dev/) - A fast build tool and development server.
+*   **Styling:**
+    *   [Tailwind CSS](https://tailwindcss.com/) - A utility-first CSS framework.
+    *   [PostCSS](https://postcss.org/) - A tool for transforming CSS with JavaScript.
+*   **Linting:**
+    *   [ESLint](https://eslint.org/) - A pluggable and configurable linter tool for identifying and reporting on patterns in JavaScript.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Getting Started
+
+### Prerequisites
+
+*   Node.js
+*   npm
+
+### Installation
+
+1.  Clone the repository:
+    ```sh
+    git clone git@github.com:bugbbc/DBK-.git
+    ```
+2.  Install NPM packages:
+    ```sh
+    npm install
+    ```
+
+### Running the Development Server
+
+```sh
+npm run dev
+```
+
+### Building for Production
+
+```sh
+npm run build
+```
