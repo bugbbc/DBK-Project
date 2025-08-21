@@ -1,0 +1,134 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Light Mode Colors from tailwind.config.js */
+    --brand-primary: #165DFF;
+    --brand-secondary: #00C29A;
+    --brand-accent: #FFAB00;
+    --text-primary: #1F2937;
+    --text-secondary: #6B7280;
+    --bg-card: #FFFFFF;
+    --bg-main: #F8FAFC; /* 背景色修改处标记 */
+  }
+
+  .dark {
+    /* Dark Mode Colors from tailwind.config.js */
+    --brand-primary: #4A8EFF;
+    --brand-secondary: #10B981;
+    --brand-accent: #F59E0B;
+    --text-primary: #F9FAFB;
+    --text-secondary: #D1D5DB;
+        --bg-card: #334155; /* 背景色修改处标记 */
+    --bg-main: #111827;
+  }
+
+  body {
+    @apply bg-bg-main text-text-primary;
+    font-family: 'Inter', sans-serif;
+  }
+}
+
+@layer components {
+  /* General container */
+  .container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Main button style */
+  .main-btn {
+    @apply inline-block bg-brand-primary text-white font-bold py-3 px-6 rounded-lg shadow-md transition-all duration-300;
+    @apply hover:bg-opacity-90 hover:shadow-lg;
+  }
+
+  /* Module Card */
+  .module-card {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 48px; /* Increased padding */
+    background-color: var(--bg-card);
+    border-radius: 16px; /* Increased border-radius */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07); /* Enhanced shadow */
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .dark .module-card {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  }
+  
+  .module-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1); /* Enhanced hover shadow */
+  }
+  
+  .dark .module-card:hover {
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Gradient Divider */
+  .module-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--brand-primary), transparent);
+    margin: 60px auto; /* Increased margin */
+    width: 60%; /* Reduced width for a more subtle look */
+    opacity: 0.5;
+  }
+  
+  /* Responsive Module Spacing */
+  .module-spacing {
+    padding-top: 60px; /* Add padding to the top of the section to offset the fixed navbar */
+    margin-top: -60px; /* Negative margin to keep the scroll position accurate */
+  }
+  
+  /* Module Title */
+  .module-title {
+    @apply text-3xl sm:text-4xl font-bold text-center text-text-primary dark:text-dark-text-primary mb-4 relative pb-4;
+  }
+  
+  .module-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px; /* Fixed width for the underline */
+    height: 4px; /* Thicker underline */
+    background-color: var(--brand-primary);
+    border-radius: 2px;
+  }
+  
+  /* Feature Item (Icon + Text) */
+  .feature-item {
+    @apply flex items-center text-lg mb-4;
+  }
+
+  .feature-item i {
+    color: var(--brand-primary);
+    @apply mr-3 text-xl;
+  }
+
+  /* Highlighted container for core interaction */
+  .highlight-container {
+    border: 2px solid var(--brand-primary);
+    background-color: #E0F2FE; /* Specific light blue */
+    padding: 24px;
+    border-radius: 8px;
+  }
+
+  .dark .highlight-container {
+    background-color: #1E293B; /* A darker blue for dark mode */
+  }
+
+  /* Responsive Grid for module content */
+  .content-grid {
+    @apply grid grid-cols-1 gap-8;
+  }
+  @media (min-width: 1024px) {
+    .content-grid {
+      @apply grid-cols-2 gap-12;
+    }
+  }
+}
