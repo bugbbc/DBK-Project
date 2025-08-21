@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { FaPaperPlane, FaRobot, FaUser } from 'react-icons/fa';
+import React, { useState, useEffect, useRef } from 'react';
+import { FaPaperPlane, FaRobot, FaUser, FaUpload } from 'react-icons/fa';
 
 const CoreInteraction = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  const fileInputRef = useRef(null);
 
   const handleSend = () => {
     if (input.trim()) {
@@ -20,6 +21,19 @@ const CoreInteraction = () => {
         setIsTyping(false);
       }, 2000);
     }
+  };
+
+  const handleFileSelect = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const newMessages = [...messages, { text: `已上传文件: ${file.name}`, sender: 'user' }];
+      setMessages(newMessages);
+      // Here you would typically handle the file upload to a server
+    }
+  };
+
+  const handleUploadClick = () => {
+    fileInputRef.current.click();
   };
 
   useEffect(() => {
@@ -61,6 +75,15 @@ const CoreInteraction = () => {
             )}
           </div>
           <div className="p-4 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 flex items-center">
+            <input
+              type="file"
+              ref={fileInputRef}
+              onChange={handleFileSelect}
+              className="hidden"
+            />
+            <button onClick={handleUploadClick} title="上传文件" className="main-btn mr-3">
+              <FaUpload />
+            </button>
             <input
               type="text"
               value={input}

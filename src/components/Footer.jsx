@@ -1,5 +1,6 @@
-import React from "react";
-import { FaGithub, FaWeixin, FaQq, FaArrowUp } from "react-icons/fa";
+import React, { useState, useEffect } from 'react';
+import { FaGithub, FaWeixin, FaQq, FaArrowUp } from 'react-icons/fa';
+import logo from '../assets/logo.svg'; // 假设logo在assets中
 
 const links = {
   about: [
@@ -31,19 +32,41 @@ const socialLinks = [
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const [lastUpdated, setLastUpdated] = useState('');
+  const [showScroll, setShowScroll] = useState(false);
+
+  useEffect(() => {
+    // 模拟获取最后更新时间
+    setLastUpdated(new Date().toLocaleDateString('zh-CN'));
+
+    const checkScrollTop = () => {
+      if (!showScroll && window.pageYOffset > 400) {
+        setShowScroll(true);
+      } else if (showScroll && window.pageYOffset <= 400) {
+        setShowScroll(false);
+      }
+    };
+
+    window.addEventListener('scroll', checkScrollTop);
+    return () => window.removeEventListener('scroll', checkScrollTop);
+  }, [showScroll]);
+
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
-    <footer className="bg-bg-main border-t border-gray-200 dark:border-gray-800">
+    <footer className="bg-bg-main border-t border-border-color-light dark:border-border-color-dark">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-8">
           <div className="md:col-span-4 lg:col-span-2">
-            <h3 className="text-2xl font-bold text-text-primary">
-              DBK智撰工坊
-            </h3>
+            <div className="flex items-center mb-4">
+              <img src={logo} alt="DBK智撰工坊 Logo" className="h-10 w-10 mr-3" />
+              <h3 className="text-2xl font-bold text-text-primary">
+                DBK智撰工坊
+              </h3>
+            </div>
             <p className="text-text-secondary mt-3 text-sm max-w-md">
               智汇多模态，笔撰政务新篇。我们致力于通过领先的AI技术，为政府部门提供高效、智能的文书工作解决方案。
             </p>
@@ -54,7 +77,7 @@ const Footer = () => {
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-text-secondary hover:text-brand-primary transition-colors"
+                  className="text-text-secondary hover:text-brand-primary transform hover:-translate-y-1 transition-all duration-300"
                   title={link.name}
                 >
                   {link.icon}
@@ -120,21 +143,25 @@ const Footer = () => {
 
         <div className="mt-12 border-t border-gray-200 dark:border-gray-800 pt-8 flex flex-col sm:flex-row justify-between items-center">
           <p className="text-sm text-text-secondary">
-            &copy; {currentYear} DBK智撰工坊. 保留所有权利。
+            <span>&copy; {currentYear} DBK智撰工坊. 保留所有权利.</span>
+            <span className="hidden sm:inline"> | </span>
+            <span className="block sm:inline mt-2 sm:mt-0">最后更新: {lastUpdated}</span>
           </p>
           <p className="text-sm text-text-secondary mt-4 sm:mt-0">
             "华为杯"第二届中国研究生人工智能创新大赛参赛作品
           </p>
         </div>
       </div>
-      <button
-        onClick={scrollToTop}
-        className="fixed bottom-8 right-8 bg-brand-primary text-white p-3 rounded-full shadow-lg hover:bg-brand-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-primary"
-        aria-label="返回顶部"
-        title="返回顶部"
-      >
-        <FaArrowUp size={20} />
-      </button>
+      {showScroll && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-8 right-8 bg-brand-primary text-white p-3 rounded-full shadow-lg hover:bg-brand-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-primary transition-opacity duration-300"
+          aria-label="返回顶部"
+          title="返回顶部"
+        >
+          <FaArrowUp size={20} />
+        </button>
+      )}
     </footer>
   );
 };

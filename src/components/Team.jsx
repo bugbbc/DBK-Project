@@ -35,6 +35,17 @@ const teamMembers = [
       twitter: '#',
     },
   },
+  {
+    name: '王建国',
+    role: '后端架构师 & 数据工程师',
+    avatar: 'https://i.pravatar.cc/150?img=4',
+    bio: '负责系统后端架构设计与数据处理流程优化，保障平台稳定、高效运行，对高并发、大数据场景有丰富经验。',
+    social: {
+      github: '#',
+      linkedin: '#',
+      twitter: '#',
+    },
+  },
 ];
 
 const Team = () => {
