@@ -1,0 +1,56 @@
+.policy-interpretation-page {
+  padding: 2rem;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+.policy-interpretation-page .page-title {
+  text-align: center;
+  margin-bottom: 1rem;
+  color: var(--text-color);
+}
+
+.policy-interpretation-page .page-description {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 1rem;
+  color: var(--text-color-secondary);
+}
+
+.policy-card {
+  margin-bottom: 1.5rem;
+  border-radius: 8px;
+  background-color: var(--component-background-color);
+  border: 1px solid var(--border-color);
+}
+
+.policy-card .ant-card-head-title {
+  color: var(--text-color);
+}
+
+.policy-card .ant-card-extra a {
+  color: var(--primary-color);
+}
+
+.policy-key-points .ant-list-item {
+  color: var(--text-color-secondary);
+  border-color: var(--border-color) !important;
+}
+
+.ant-collapse {
+  background-color: transparent;
+  border-color: var(--border-color);
+}
+
+.ant-collapse-item > .ant-collapse-header {
+  color: var(--text-color) !important;
+}
+
+.ant-collapse-content {
+  background-color: transparent;
+  color: var(--text-color);
+}
+
+.ant-collapse > .ant-collapse-item {
+    border-color: var(--border-color);
+}
