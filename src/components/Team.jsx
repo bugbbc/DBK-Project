@@ -46,6 +46,17 @@ const teamMembers = [
       twitter: '#',
     },
   },
+  {
+    name: '刘悦',
+    role: '产品经理 & 业务分析师',
+    avatar: 'https://i.pravatar.cc/150?img=5',
+    bio: '拥有敏锐的市场洞察力与出色的产品规划能力，善于挖掘用户需求，将复杂的业务逻辑转化为清晰、易用的产品功能。',
+    social: {
+      github: '#',
+      linkedin: '#',
+      twitter: '#',
+    },
+  },
 ];
 
 const Team = () => {

@@ -26,17 +26,22 @@ const features = [
 
 const ProjectIntro = () => {
   return (
-    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-      {features.map((feature, index) => (
-        <div key={index} className="text-center p-6 bg-bg-main dark:bg-gray-800 rounded-lg shadow-sm">
-          <div className="flex items-center justify-center h-16 w-16 rounded-full bg-brand-primary/10 text-brand-primary mx-auto mb-4">
-            {feature.icon}
-          </div>
-          <h3 className="text-xl font-bold text-text-primary mb-2">{feature.title}</h3>
-          <p className="text-text-secondary">{feature.description}</p>
+    <section className="py-20">
+      <div className="container mx-auto px-4">
+        <h2 className="text-3xl font-bold text-center text-text-primary mb-12">项目介绍</h2>
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {features.map((feature, index) => (
+            <div key={index} className="text-center p-6 bg-bg-main dark:bg-gray-800 rounded-lg shadow-sm">
+              <div className="flex items-center justify-center h-16 w-16 rounded-full bg-brand-primary/10 text-brand-primary mx-auto mb-4">
+                {feature.icon}
+              </div>
+              <h3 className="text-xl font-bold text-text-primary mb-2">{feature.title}</h3>
+              <p className="text-text-secondary">{feature.description}</p>
+            </div>
+          ))}
         </div>
-      ))}
-    </div>
+      </div>
+    </section>
   );
 };
 
