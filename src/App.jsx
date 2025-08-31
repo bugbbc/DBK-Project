@@ -12,6 +12,7 @@ import AgentTechPage from './pages/AgentTechPage';
 import TechDemoPage from './pages/TechDemoPage';
 import InteractionPage from './pages/InteractionPage';
 import FunctionDemoPage from './pages/FunctionDemoPage';
+import IntegratedPage from './pages/IntegratedPage';
 
 import ContactPage from './pages/ContactPage';
 
@@ -32,6 +33,7 @@ function App() {
             <Route path="/tech-demo" element={<TechDemoPage />} />
             <Route path="/interaction" element={<InteractionPage />} />
             <Route path="/function-demo" element={<FunctionDemoPage />} />
+            <Route path="/integrated" element={<IntegratedPage />} />
             <Route path="/contact" element={<ContactPage />} />
           </Routes>
         </main>

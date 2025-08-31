@@ -6,6 +6,7 @@ const FunctionDemoPage = () => {
     { name: '智能写作', path: '/intelligent-writing', description: '利用先进的AI技术，快速生成高质量的文稿，支持多种风格和场景。' },
     { name: '多模态创作', path: '/multimodal-creation', description: '结合文本、图片、音视频等多种媒体，创作内容丰富、形式多样的作品。' },
     { name: '政策解读', path: '/policy-interpretation', description: '精准解读最新政策文件，提取关键信息，为决策提供有力支持。' },
+    { name: '知识库接入', path: '/integrated', description: '接入您的知识库，让AI在您的知识体系中学习和创作。' },
   ];
 
   return (

@@ -48,7 +48,7 @@ const Navbar = () => {
     { name: "项目介绍", path: "/project-intro" },
     { name: "技术展示", path: "/tech-demo" },
     { name: "交互体验", path: "/interaction" },
-    { name: "功能演示", path: "/function-demo" },
+    { name: "功能使用", path: "/integrated" },
     { name: "团队介绍", path: "/team-detail" },
     { name: "联系我们", path: "/contact" },
   ];
