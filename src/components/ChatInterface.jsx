@@ -12,6 +12,53 @@ const ChatInterface = () => {
   const [loading, setLoading] = useState(false);
   const [progress, setProgress] = useState(0);
   const [inputValue, setInputValue] = useState('');
+  const [messages, setMessages] = useState([]);
+
+  const handleSendMessage = async () => {
+    if (inputValue.trim() === '') return;
+
+    const newMessage = { text: inputValue, sender: 'user' };
+    setMessages((prevMessages) => [...prevMessages, newMessage]);
+    const currentInput = inputValue;
+    setInputValue('');
+
+    if (!knowledgeBaseConnected) {
+      try {
+        const response = await fetch('http://localhost:3001/api/search', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ query: currentInput }),
+        });
+
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        const data = await response.json();
+        const firstResult = data.organic_results?.[0];
+        const searchResult = {
+          sender: 'bot',
+          searchResult: firstResult
+            ? {
+                title: firstResult.title,
+                link: firstResult.link,
+                snippet: firstResult.snippet,
+              }
+            : null,
+        };
+        setMessages((prevMessages) => [...prevMessages, searchResult]);
+      } catch (error) {
+        console.error('Error fetching search results:', error);
+        const searchResult = {
+          sender: 'bot',
+          text: 'Sorry, something went wrong with the search.',
+        };
+        setMessages((prevMessages) => [...prevMessages, searchResult]);
+      }
+    }
+  };
 
   const handlePromptClick = (prompt) => {
     setInputValue(prompt);
@@ -57,7 +104,7 @@ const ChatInterface = () => {
   const writingPrompts = [
     '生成一份关于rivia.report 的报告。',
     '起草一份关于加强基层党建工作的讲话稿。',
-    '撰写一份关于推进乡村振兴战略的实施方案。',
+    '撰写一份关于推进振兴乡村战略的实施方案。',
   ];
 
   return (
@@ -82,15 +129,43 @@ const ChatInterface = () => {
       </div>
 
       <div className="flex-1 p-4 overflow-y-auto">
-        {/* Chat messages will go here */}
-        <div className="text-gray-500 dark:text-gray-400">
-          <p>提示词:</p>
-          <ul className="list-disc list-inside">
-            {writingPrompts.map((prompt, index) => (
-              <li key={index} onClick={() => handlePromptClick(prompt)} className="cursor-pointer hover:underline">{prompt}</li>
-            ))}\
-          </ul>
+        <div className="space-y-4">
+          {messages.map((msg, index) => (
+            <div
+              key={index}
+              className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
+              <div
+                className={`max-w-lg px-4 py-2 rounded-lg ${msg.sender === 'user'
+                    ? 'bg-blue-500 text-white'
+                    : 'bg-gray-200 text-gray-900 dark:bg-gray-700 dark:text-gray-200'
+                  }`}>
+                {msg.text ? (
+                  msg.text
+                ) : msg.searchResult ? (
+                  <div>
+                    <h3 className="font-bold text-lg mb-2">{msg.searchResult.title}</h3>
+                    <p className="text-sm mb-2">{msg.searchResult.snippet}</p>
+                    <a
+                      href={msg.searchResult.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-400 hover:underline"
+                    >
+                      查看原文
+                    </a>
+                  </div>
+                ) : (
+                  '没有找到结果'
+                )}
+              </div>
+            </div>
+          ))}
         </div>
+        {messages.length === 0 && !knowledgeBaseConnected && (
+          <div className="text-center text-gray-500 dark:text-gray-400 mt-4">
+            <p>知识库未连接，当前为联网搜索模式。</p>
+          </div>
+        )}
       </div>
 
       <div className="p-4 border-t border-gray-200 dark:border-gray-700">
@@ -107,7 +182,7 @@ const ChatInterface = () => {
             onChange={(e) => setInputValue(e.target.value)}
             className="w-full p-2 border rounded-md bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600"
             rows="4"
-            placeholder="输入你的问题..."
+            placeholder={knowledgeBaseConnected ? "输入你的问题..." : "输入以进行联网搜索..."}
           />
           <div className="absolute bottom-3 right-3 flex items-center space-x-2">
             <button className="p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full">
@@ -131,7 +206,7 @@ const ChatInterface = () => {
             <input type="file" id="word-input" className="hidden" accept=".doc,.docx" />
             <input type="file" id="pdf-input" className="hidden" accept=".pdf" />
             <input type="file" id="image-input" className="hidden" accept="image/png, image/jpeg" />
-            <Button type="primary">
+            <Button type="primary" onClick={handleSendMessage}>
               发送
             </Button>
           </div>
