@@ -5,6 +5,7 @@ import ProjectIntro from '../components/ProjectIntro';
 import MultimodalStatus from '../components/MultimodalStatus';
 import AgentTech from '../components/AgentTech';
 import CoreInteraction from '../components/CoreInteraction';
+import AgentInfo from '../components/AgentInfo';
 import Team from '../components/Team';
 import Contact from '../components/Contact';
 
@@ -37,6 +38,14 @@ const HomePage = () => {
             <MultimodalStatus />
             <AgentTech />
           </div>
+        </div>
+      </section>
+
+      <div className="module-divider" />
+
+      <section id="agent-info" className="module-spacing">
+        <div className="module-card">
+          <AgentInfo />
         </div>
       </section>
 
