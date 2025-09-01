@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Select, message, Input, Progress, Modal } from 'antd';
+import { Button, Select, message, Input, Progress, Modal, Switch } from 'antd';
 import { FaImage, FaPaperclip } from 'react-icons/fa';
 
 const { Option } = Select;
@@ -7,6 +7,7 @@ const { TextArea } = Input;
 
 const ChatInterface = () => {
   const [knowledgeBaseConnected, setKnowledgeBaseConnected] = useState(false);
+  const [searchMode, setSearchMode] = useState('web'); // 'web' or 'knowledge'
   const [selectedFunction, setSelectedFunction] = useState('intelligent-writing');
   const [showFileTypeMenu, setShowFileTypeMenu] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -22,7 +23,7 @@ const ChatInterface = () => {
     const currentInput = inputValue;
     setInputValue('');
 
-    if (!knowledgeBaseConnected) {
+    if (searchMode === 'web') {
       try {
         const response = await fetch('http://localhost:3001/api/search', {
           method: 'POST',
@@ -37,26 +38,26 @@ const ChatInterface = () => {
         }
 
         const data = await response.json();
-        const firstResult = data.organic_results?.[0];
-        const searchResult = {
+        const botMessage = {
           sender: 'bot',
-          searchResult: firstResult
-            ? {
-                title: firstResult.title,
-                link: firstResult.link,
-                snippet: firstResult.snippet,
-              }
-            : null,
+          text: data.content,
         };
-        setMessages((prevMessages) => [...prevMessages, searchResult]);
+        setMessages((prevMessages) => [...prevMessages, botMessage]);
       } catch (error) {
         console.error('Error fetching search results:', error);
-        const searchResult = {
+        const errorMessage = {
           sender: 'bot',
           text: 'Sorry, something went wrong with the search.',
         };
-        setMessages((prevMessages) => [...prevMessages, searchResult]);
+        setMessages((prevMessages) => [...prevMessages, errorMessage]);
       }
+    } else {
+      // Placeholder for knowledge base search logic
+      const botMessage = {
+        sender: 'bot',
+        text: 'This is a response from the knowledge base.',
+      };
+      setMessages((prevMessages) => [...prevMessages, botMessage]);
     }
   };
 
@@ -123,9 +124,18 @@ const ChatInterface = () => {
             ))}
           </Select>
         </div>
-        <Button onClick={handleKnowledgeBaseConnect} disabled={knowledgeBaseConnected || loading}>
-          {knowledgeBaseConnected ? '知识库已接入' : '知识库接入'}
-        </Button>
+        <div className="flex items-center space-x-4">
+          <Switch
+            checkedChildren="联网搜索"
+            unCheckedChildren="知识库"
+            checked={searchMode === 'web'}
+            onChange={(checked) => setSearchMode(checked ? 'web' : 'knowledge')}
+            disabled={knowledgeBaseConnected}
+          />
+          <Button onClick={handleKnowledgeBaseConnect} disabled={knowledgeBaseConnected || loading}>
+            {knowledgeBaseConnected ? '知识库已接入' : '知识库接入'}
+          </Button>
+        </div>
       </div>
 
       <div className="flex-1 p-4 overflow-y-auto">
@@ -161,9 +171,9 @@ const ChatInterface = () => {
             </div>
           ))}
         </div>
-        {messages.length === 0 && !knowledgeBaseConnected && (
+        {messages.length === 0 && searchMode === 'web' && !knowledgeBaseConnected && (
           <div className="text-center text-gray-500 dark:text-gray-400 mt-4">
-            <p>知识库未连接，当前为联网搜索模式。</p>
+            <p>当前为联网搜索模式。</p>
           </div>
         )}
       </div>
@@ -182,7 +192,7 @@ const ChatInterface = () => {
             onChange={(e) => setInputValue(e.target.value)}
             className="w-full p-2 border rounded-md bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600"
             rows="4"
-            placeholder={knowledgeBaseConnected ? "输入你的问题..." : "输入以进行联网搜索..."}
+            placeholder={searchMode === 'web' ? "输入以进行联网搜索..." : "输入你的问题..."}
           />
           <div className="absolute bottom-3 right-3 flex items-center space-x-2">
             <button className="p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full">
