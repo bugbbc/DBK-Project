@@ -13,6 +13,7 @@ import TechDemoPage from './pages/TechDemoPage';
 import InteractionPage from './pages/InteractionPage';
 import FunctionDemoPage from './pages/FunctionDemoPage';
 import IntegratedPage from './pages/IntegratedPage';
+import DocumentAnalysisPage from './pages/DocumentAnalysisPage';
 
 import ContactPage from './pages/ContactPage';
 
@@ -34,6 +35,7 @@ function App() {
             <Route path="/interaction" element={<InteractionPage />} />
             <Route path="/function-demo" element={<FunctionDemoPage />} />
             <Route path="/integrated" element={<IntegratedPage />} />
+            <Route path="/document-analysis" element={<DocumentAnalysisPage />} />
             <Route path="/contact" element={<ContactPage />} />
           </Routes>
         </main>
